@@ -1,0 +1,47 @@
+name: twitter_clone
+description: Twitter kind of clone where we have real time updates.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  meta: ^1.1.6
+  graphql_flutter: ^0.9.5
+  localstorage: ^1.0.1
+  fluro: ^1.4.0
+  timeago: ^2.0.10
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/icon-48.png
+    - assets/images/icon-480.png
+  fonts:
+    - family: Edge
+      fonts:
+        - asset: assets/fonts/edge.ttf
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/product-sans/regular.ttf
+          weight: 400
+        - asset: assets/fonts/product-sans/bold.ttf
+          weight: 700
+        - asset: assets/fonts/product-sans/bold-italic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/product-sans/medium.ttf
+          weight: 600
+        - asset: assets/fonts/product-sans/medium-italic.ttf
+          style: italic
+          weight: 600
+        - asset: assets/fonts/product-sans/italic.ttf
+          style: italic
