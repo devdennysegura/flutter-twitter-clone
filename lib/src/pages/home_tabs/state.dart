@@ -204,7 +204,12 @@ class HomeTabState extends State<HomeTab> with SingleTickerProviderStateMixin {
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: controller,
-        children: <Widget>[Home(), Search(), Notification(), Message()],
+        children: <Widget>[
+          Home(),
+          Search(),
+          Notification(),
+          Message(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: TwitterColor.dodgetBlue,

@@ -2,8 +2,17 @@ part of twitter;
 
 class FeedCard extends StatelessWidget {
   final dynamic tweet;
+  final bool isFavorited;
 
-  FeedCard({@required this.tweet, Key key}) : super(key: key);
+  FeedCard({
+    @required this.tweet,
+    this.isFavorited,
+    Key key,
+  }) : super(key: key);
+
+  void favoriteTweet(runMutation) {
+    runMutation({'_id': tweet['_id']});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +46,8 @@ class FeedCard extends StatelessWidget {
                       name:
                           '${tweet['user']['firstName']} ${tweet['user']['lastName'] ?? ''} ',
                       nickname: '${tweet['user']['username']}',
-                      time: ' ${timeago.format(DateTime.parse(tweet['createdAt']), locale: 'en_short')}',
+                      time:
+                          ' ${timeago.format(DateTime.parse(tweet['createdAt']), locale: 'en_short')}',
                     ),
                     Icon(
                       Icons.keyboard_arrow_down,
@@ -64,11 +74,18 @@ class FeedCard extends StatelessWidget {
                       icon: TwitterIcons.retweet_outline,
                       value: '',
                     ),
-                    FeedCardAction(
-                      icon: TwitterIcons.heart_outline,
-                      value:
-                          '${tweet['favoriteCount'] > 0 ? tweet['favoriteCount'] : ''}',
-                    ),
+                    Mutation(favoriteTweetMutation, builder: (runMutation,
+                        {bool loading, var data, Exception error}) {
+                      return FeedCardAction(
+                        isSelected: isFavorited,
+                        icon: isFavorited
+                            ? TwitterIcons.heart_filled
+                            : TwitterIcons.heart_outline,
+                        action: () => favoriteTweet(runMutation),
+                        value:
+                            '${tweet['favoriteCount'] > 0 ? tweet['favoriteCount'] : ''}',
+                      );
+                    }),
                     FeedCardAction(
                       icon: TwitterIcons.comment_outline,
                     ),

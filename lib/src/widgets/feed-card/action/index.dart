@@ -3,17 +3,21 @@ part of twitter;
 class FeedCardAction extends StatelessWidget {
   final IconData icon;
   final String value;
+  final Function action;
+  final bool isSelected;
 
   FeedCardAction({
     @required this.icon,
+    this.action,
     this.value,
+    this.isSelected = false,
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => print(''),
+      onTap: action,
       child: Container(
         padding: EdgeInsets.all(4.0),
         decoration: BoxDecoration(
@@ -24,7 +28,7 @@ class FeedCardAction extends StatelessWidget {
             Icon(
               icon,
               size: 16.0,
-              color: TwitterColor.paleSky,
+              color: isSelected ? TwitterColor.ceriseRed : TwitterColor.paleSky,
             ),
             (value != null
                 ? Padding(
@@ -32,9 +36,10 @@ class FeedCardAction extends StatelessWidget {
                     child: Text(
                       value,
                       style: TextStyle(
-                          color: TwitterColor.paleSky,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w400),
+                        color: TwitterColor.paleSky,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   )
                 : Container()),

@@ -7,6 +7,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   );
   List<dynamic> tweets = List();
   List<dynamic> recents = List();
+  List<dynamic> favorited = List();
   SocketClient socketClient;
 
   @override
@@ -20,13 +21,51 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       socketClient = ws;
       socketClient
           .subscribe(SubscriptionRequest(tweetAddOperation, addTweetEvent, {}))
-          .listen(subscriptionListener);
+          .listen(tweetAddedSubscription);
+      socketClient
+          .subscribe(SubscriptionRequest(
+              tweetFavoritedOperation, tweetFavoritedEvent, {}))
+          .listen(tweetFavoritedSubscription);
     });
     super.initState();
   }
 
-  void subscriptionListener(subscription) {
-    if (subscription.type == 'data') recents.add(subscription.data['tweetAdded']);
+  void tweetAddedSubscription(subscription) {
+    if (subscription.type == 'data')
+      recents.add(subscription.data['tweetAdded']);
+  }
+
+  void tweetFavoritedSubscription(subscription) {
+    if (subscription.type == 'data') {
+      if (mounted)
+        setState(() {
+          var id = subscription.data['tweetFavorited']['_id'];
+          var t = favorited.firstWhere((tweet) => tweet['_id'] == id,
+              orElse: () => null);
+          int index = tweets.indexWhere((tweet) => tweet['_id'] == id);
+          tweets[index]['favoriteCount'] =
+              subscription.data['tweetFavorited']['favoriteCount'];
+          if (t == null &&
+              subscription.data['tweetFavorited']['favoriteCount'] > 0) {
+            favorited.add(subscription.data['tweetFavorited']);
+          } else {
+            favorited.removeWhere((tweet) => tweet['_id'] == id);
+          }
+        });
+    }
+  }
+
+  void tweetChangedSubscription(subscription) {
+    if (subscription.type == 'data' && subscription.data != null) {
+      if (mounted)
+        setState(() {
+          var id = subscription.data['tweetChanged']['_id'];
+          int index = favorited.indexWhere((tweet) => tweet['_id'] == id);
+          if (index >= 0) {
+            tweets[index] = subscription.data['tweetChanged'];
+          }
+        });
+    }
   }
 
   void showMore() {
@@ -85,7 +124,14 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         addAutomaticKeepAlives: true,
                         itemCount: tweets.length,
                         itemBuilder: (context, int index) {
-                          return FeedCard(tweet: tweets[index]);
+                          var can = favorited.firstWhere(
+                              (tweet) => tweet['_id'] == tweets[index]['_id'],
+                              orElse: () => null);
+                          bool fav = can != null;
+                          return FeedCard(
+                            tweet: tweets[index],
+                            isFavorited: fav,
+                          );
                         },
                       ),
                     ),

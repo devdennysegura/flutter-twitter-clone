@@ -81,7 +81,6 @@ class _SignInFormState extends State<SignInForm> {
               keyboardType: TextInputType.text,
               controller: widget.pass,
               maxLines: 1,
-              obscureText: true,
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(

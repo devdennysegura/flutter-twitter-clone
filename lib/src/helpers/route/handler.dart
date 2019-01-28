@@ -2,7 +2,7 @@ part of twitter;
 
 var rootHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-  return Container();
+  return Root();
 });
 var loginHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {

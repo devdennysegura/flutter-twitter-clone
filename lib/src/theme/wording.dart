@@ -13,6 +13,10 @@ class Wording {
   static String addComment = 'Agregar un comentario';
 
   // Texts
+  static String recentTweet = 'Tweet reciente de ';
+  static String nothingHere = '''No hay nada que ver aquí...
+  por ahora.''';
+  static String mentionedTweetsEmpty = 'Cuando alguien te mencione en un Tweet, veras la mención aquí.';
   static String showMore = 'Mostrar más Tweets';
   static String signInTitle = 'Iniciar sesión en Twitter';
   static String newPass = 'Necesitarás una contraseña';
