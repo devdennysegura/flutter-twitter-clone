@@ -5,6 +5,7 @@ class SignInState extends State<SignIn> {
   TextEditingController passController = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final LocalStorage storage = LocalStorage('@twitterclone');
+  dynamic error;
 
   @override
   void initState() {
@@ -18,7 +19,12 @@ class SignInState extends State<SignIn> {
     super.dispose();
   }
 
-  void signIn() {}
+  void signIn(runMutation) {
+    runMutation({
+      'email': emailController.text,
+      'password': passController.text,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,23 +86,36 @@ class SignInState extends State<SignIn> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            RaisedButton(
-              disabledColor: TwitterColor.dodgetBlue_50,
-              elevation: 0.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24.0),
-              ),
-              color: TwitterColor.dodgetBlue,
-              onPressed: signIn,
-              child: Text(
-                Wording.signin,
-                style: TextStyle(
-                  color: TwitterColor.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+            Mutation(signInMutation, builder: (
+              runMutation, {
+              bool loading,
+              var data,
+              Exception error,
+            }) {
+              return RaisedButton(
+                disabledColor: TwitterColor.dodgetBlue_50,
+                elevation: 0.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24.0),
                 ),
-              ),
-            ),
+                color: TwitterColor.dodgetBlue,
+                onPressed: () => signIn(runMutation),
+                child: Text(
+                  Wording.signin,
+                  style: TextStyle(
+                    color: TwitterColor.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            }, onCompleted: (Map<String, dynamic> data) {
+              storage.setItem('auth', data['login']['token']);
+              ValueNotifier<Client> client = ValueNotifier(emptyClient);
+              client.value.apiToken = data['login']['token'];
+              Application.router.navigateTo(context, Routes.home,
+                  replace: true, clearStack: true);
+            }),
           ],
         ),
       ),

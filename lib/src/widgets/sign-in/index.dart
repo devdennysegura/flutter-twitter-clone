@@ -78,6 +78,7 @@ class _SignInFormState extends State<SignInForm> {
             ),
             child: TextField(
               onChanged: refresh,
+              obscureText: true,
               keyboardType: TextInputType.text,
               controller: widget.pass,
               maxLines: 1,
@@ -88,7 +89,7 @@ class _SignInFormState extends State<SignInForm> {
                     color: TwitterColor.dodgetBlue,
                   ),
                 ),
-                labelText: Wording.email,
+                labelText: Wording.pass,
                 labelStyle: TextStyle(
                   color: TwitterColor.woodsmoke,
                 ),

@@ -14,30 +14,34 @@ class FeedCardOwner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: '$name ',
-        style: TextStyle(
-          color: TwitterColor.woodsmoke,
-          fontWeight: FontWeight.bold,
-          fontSize: 15.0,
+    return Container(
+      width: 230.0,
+      child: RichText(
+        overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+          text: '$name ',
+          style: TextStyle(
+            color: TwitterColor.woodsmoke,
+            fontWeight: FontWeight.bold,
+            fontSize: 15.0,
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: '@$nickname ·',
+              style: TextStyle(
+                color: TwitterColor.paleSky,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            TextSpan(
+              text: ' $time',
+              style: TextStyle(
+                color: TwitterColor.paleSky,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
-        children: <TextSpan>[
-          TextSpan(
-            text: '@$nickname ·',
-            style: TextStyle(
-              color: TwitterColor.paleSky,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          TextSpan(
-            text: ' $time',
-            style: TextStyle(
-              color: TwitterColor.paleSky,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ],
       ),
     );
   }

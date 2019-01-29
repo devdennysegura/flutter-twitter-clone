@@ -18,6 +18,7 @@ part 'theme/style.dart';
 part 'theme/wording.dart';
 
 // GraphQl
+part 'graphql/mutations/sign-in.dart';
 part 'graphql/mutations/sign-up.dart';
 part 'graphql/mutations/create-tweet.dart';
 part 'graphql/mutations/favorite-tweet.dart';

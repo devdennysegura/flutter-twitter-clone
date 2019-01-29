@@ -3,7 +3,7 @@ part of twitter;
 class AllNotificationState extends State<AllNotification> {
   final dynamic mockNotification = {
     'avatar': fakeAvatar1,
-    'name': 'Noruego',
+    'name': 'Noruego Pava',
     'message':
         'v2.22 added clickable links to stack traces in the Debug Console 🎉🍾',
   };
