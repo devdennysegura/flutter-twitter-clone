@@ -39,7 +39,7 @@ Server credits to [Emanuel Quimper](https://github.com/EQuimper).
     $ clone this repo
     $ Install flutter dependencies
     $ Run NodeJS
-    $ Change host String on `src/helpers/config/host.dart`
+    $ Change host String on `src/helpers/config/constants.dart`
     $ flutter run
 
 Thanks
